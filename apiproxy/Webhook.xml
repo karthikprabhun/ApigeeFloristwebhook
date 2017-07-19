@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="Webhook">
+    <Basepaths>/webhook/v1</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1499340328784</CreatedAt>
+    <CreatedBy>karthikprabhu77@gmail.com</CreatedBy>
+    <Description>Rest call 2 backend service</Description>
+    <DisplayName>Webhook</DisplayName>
+    <LastModifiedAt>1500395182416</LastModifiedAt>
+    <LastModifiedBy>karthikprabhu77@gmail.com</LastModifiedBy>
+    <Policies>
+        <Policy>GetPayloadData</Policy>
+        <Policy>GetRequestBody</Policy>
+        <Policy>GetRequestBodyJSON</Policy>
+        <Policy>parsePayload</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>node://Ccinfo.js</Resource>
+        <Resource>node://Customer.js</Resource>
+        <Resource>node://Order.js</Resource>
+        <Resource>node://PayLoadMapping.js</Resource>
+        <Resource>node://Product.js</Resource>
+        <Resource>node://Recipent.js</Resource>
+        <Resource>node://app.js</Resource>
+        <Resource>node://hello-world.js</Resource>
+        <Resource>node://node_modules_body-parser.zip</Resource>
+        <Resource>node://package.json</Resource>
+        <Resource>jsc://Ccinfo.js</Resource>
+        <Resource>jsc://Customer.js</Resource>
+        <Resource>jsc://Order.js</Resource>
+        <Resource>jsc://Product.js</Resource>
+        <Resource>jsc://Recipent.js</Resource>
+        <Resource>jsc://getPayloadData.js</Resource>
+        <Resource>jsc://parseRequestBody.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>
