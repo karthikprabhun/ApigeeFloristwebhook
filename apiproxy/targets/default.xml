@@ -8,7 +8,14 @@
     </PreFlow>
     <PostFlow name="PostFlow">
         <Request/>
-        <Response/>
+        <Response>
+            <Step>
+                <Name>GetJsonResponse</Name>
+            </Step>
+            <Step>
+                <Name>ModifyResponse</Name>
+            </Step>
+        </Response>
     </PostFlow>
     <Flows/>
     <HTTPTargetConnection>

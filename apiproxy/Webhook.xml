@@ -6,12 +6,15 @@
     <CreatedBy>karthikprabhu77@gmail.com</CreatedBy>
     <Description>Rest call 2 backend service</Description>
     <DisplayName>Webhook</DisplayName>
-    <LastModifiedAt>1500395182416</LastModifiedAt>
+    <LastModifiedAt>1500526015614</LastModifiedAt>
     <LastModifiedBy>karthikprabhu77@gmail.com</LastModifiedBy>
     <Policies>
+        <Policy>FormatResponse</Policy>
+        <Policy>GetJsonResponse</Policy>
         <Policy>GetPayloadData</Policy>
         <Policy>GetRequestBody</Policy>
         <Policy>GetRequestBodyJSON</Policy>
+        <Policy>ModifyResponse</Policy>
         <Policy>parsePayload</Policy>
     </Policies>
     <ProxyEndpoints>
