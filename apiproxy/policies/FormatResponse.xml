@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="FormatResponse">
+    <DisplayName>FormatResponse</DisplayName>
+    <Properties/>
+    <URIPath name="name"/>
+    <QueryParam name="name"/>
+    <Header name="name"/>
+    <FormParam name="name"/>
+    <Variable name="name"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <JSONPayload>
+        <Variable name="SUBTOTAL">
+            <JSONPath>$.SUBTOTAL</JSONPath>
+        </Variable>
+        <Variable name="ORDERTOTAL">
+            <JSONPath>$.ORDERTOTAL</JSONPath>
+        </Variable>
+        <Variable name="ORDERNO">
+            <JSONPath>$.ORDERNO</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">response</Source>
+    <VariablePrefix>apigee</VariablePrefix>
+</ExtractVariables>
