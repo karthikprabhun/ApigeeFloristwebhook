@@ -4,16 +4,17 @@
     <FaultRules/>
     <PreFlow name="PreFlow">
         <Request/>
-        <Response/>
+        <Response>
+        </Response>
     </PreFlow>
     <PostFlow name="PostFlow">
         <Request/>
         <Response>
             <Step>
-                <Name>GetJsonResponse</Name>
+                <Name>GetJSONOrderDetails</Name>
             </Step>
             <Step>
-                <Name>ModifyResponse</Name>
+                <Name>ModifyReponsePlaceOrder</Name>
             </Step>
         </Response>
     </PostFlow>

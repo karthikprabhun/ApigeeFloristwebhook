@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="ModifyGetItemResponseAPIAI">
+    <DisplayName>ModifyGetItemResponseAPI.AI</DisplayName>
+    <Properties/>
+    <Set>
+        <Headers/>
+        <QueryParams/>
+        <FormParams/>
+        <StatusCode>200</StatusCode>
+        <ReasonPhrase>OK</ReasonPhrase>
+        <Payload contentType="application/json">{  
+   "data":{  
+      "slack":{  
+         "attachments":[  
+            {  
+               "title": "{apigee.NAME}",
+              "image_url": "{apigee.SMALL}",
+               "color": "#36a64f",
+               "title_link": "https://null.null.null/",
+              "fields": [
+                {
+                    "title": "Item Code",
+                    "value": "{apigee.CODE}",
+                    "short": false
+                },
+                 {
+                    "title": "Price",
+                    "value": "{apigee.PRICE} USD",
+                    "short": false
+                },
+                 {
+                    "title": "Description",
+                    "value": "{apigee.DESCRIPTION}",
+                    "short": false
+                }
+            ],
+             "actions": [
+             {
+                    "name": "item",
+                    "text": "Add To Cart",
+                    "type": "button",
+                    "style": "danger",
+                    "value": "{apigee.CODE},{apigee.PRICE}"
+                },
+                {
+                    "name": "item",
+                    "text": "Order Now",
+                    "type": "button",
+                    "value": "{apigee.CODE},{apigee.PRICE}"
+                }
+            ],
+             "footer": "Team Florist",
+            "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+            "ts": 123456789
+            }
+         ]
+      }
+   }
+}
+			 
+        </Payload>
+        <Path/>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

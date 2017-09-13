@@ -1,4 +1,3 @@
-
 var Customer = function(parameters) {
 
 	if (!parameters) {
@@ -16,7 +15,7 @@ var Customer = function(parameters) {
 			ip : '1.1.1.1'
 		};
 	}
-/*	this.name = parameters.name;
+	this.name = parameters.name;
 	this.address1 = parameters.address1;
 	this.address2 = parameters.address2;
 	this.city = parameters.city;
@@ -25,57 +24,9 @@ var Customer = function(parameters) {
 	this.country = parameters.country;
 	this.phone = parameters.phone;
 	this.email = parameters.email;
-	this.ip = parameters.ip;*/
+	this.ip = parameters.ip;
 
 };
-var Recipent = function(parameters) {
-	if (!parameters) {
-		parameters = {
-			name : '',
-			institution : '',
-			address1 : '',
-			address2 : '',
-			city : '',
-			state : '',
-			country : '',
-			phone : '',
-			zipcode : ''
-		};
-	}
-
-/*	this.name = parameters.name;
-	this.institution = parameters.institution;
-	this.address1 = parameters.address1;
-	this.address2 = parameters.address2;
-	this.city = parameters.city;
-	this.state = parameters.state;
-	this.country = parameters.country;
-	this.phone = parameters.phone;
-	this.zipcode = parameters.zipcode;*/
-
-};
-
-var Product = function(parameters) {
-	if (!parameters) {
-		parameters = {
-			code : '',
-			price : '',
-			deliverydate : '',
-			cardmessage : '',
-			specialinstructions : '',
-			recipent : ''
-		};
-	}
-	
-	/*	this.code = parameters.code;
-		this.price = parameters.price;
-		this.deliverydate = parameters.deliverydate;
-		this.cardmessage = parameters.cardmessage;
-		this.specialinstructions = parameters.specialinstructions;
-		this.recipent = parameters.recipent;*/
-		
-
-}
 
 var Ccinfo = function(parameters) {
 	if (!parameters) {
@@ -87,45 +38,42 @@ var Ccinfo = function(parameters) {
 			expmonth : '',
 			expyear : ''
 
-		}
+		};
 	}
 
-/*	this.type = parameters.type;
+	this.type = parameters.type;
 	this.ccnum = parameters.ccnum;
 	this.cvv2 = parameters.cvv2;
 	this.expmonth = parameters.expmonth;
-	this.expyear = parameters.expyear;*/
+	this.expyear = parameters.expyear;
 
-}
+};
+
+var Product = function(parameters) {
+	if (!parameters) {
+		parameters = {};        
+	}
+		
+	this.code = parameters.code;
+	this.price = parameters.price;
+	this.deliverydate = parameters.deliverydate;
+	this.cardmessage = parameters.cardmessage;
+	this.specialinstructions = parameters.specialinstructions;
+	this.recipient = {};
+
+};
+
+var FLORISTONESERVICECHARGE = 14.99;
+var prodPrice = context.getVariable("apigee.productPrice");
 
 var Order = function(parameters) {
-		if (!parameters) {
-		parameters = {}
+	if (!parameters) {
+		parameters = {};
 	}
 
-	this.prod = {};
 	this.products = [];
 	this.customer = {};
 	this.ccinfo = {};
-	this.recipient = {};
-	
-	
-//Default value
-	this.prod.code = '';
-	this.prod.price = '';
-	this.prod.deliverydate = '';
-	this.prod.cardmessage = '';
-	this.prod.specialinstructions = '';
-	this.prod.recipient = this.recipient;
-	this.recipient.name = '';
-	this.recipient.institution = '';
-	this.recipient.address1 = '';
-	this.recipient.address2 = '';
-	this.recipient.city = '';
-	this.recipient.state = '';
-	this.recipient.country = '';
-	this.recipient.phone = '';
-	this.recipient.zipcode = '';
 
 	this.customer.name = '';
 	this.customer.address1 = '';
@@ -143,36 +91,7 @@ var Order = function(parameters) {
 	this.ccinfo.cvv2 = '';
 	this.ccinfo.expmonth = '';
 	this.ccinfo.expyear = '';
-	this.ordertotal = 64.94;
-	
-	if (parameters['products']) {
-		product = parameters.products;
-
-		this.prod.code = product.code;
-		this.prod.price = product.price;
-		this.prod.deliverydate = product.deliverydate;
-		this.prod.cardmessage = product.cardmessage;
-		this.prod.specialinstructions = product.specialinstructions;
-		this.prod.recipient = this.recipient;
-
-		if (product['recipient']) {
-			var recipient = product.recipient;
-
-			this.recipient.name = recipient.name;
-			this.recipient.institution = recipient.institution;
-			this.recipient.address1 = recipient.address1;
-			this.recipient.address2 = recipient.address2;
-			this.recipient.city = recipient.city;
-			this.recipient.state = recipient.state;
-			this.recipient.country = recipient.country;
-			this.recipient.phone = recipient.phone;
-			this.recipient.zipcode = recipient.zipcode;
-
-		}
-
-	}
-
-	this.products.push(this.prod);
+	this.ordertotal = '';
 
 	if (parameters['customer']) {
 		var customer = parameters.customer;
@@ -201,78 +120,98 @@ var Order = function(parameters) {
 
 	}
 
+};
+
+Order.prototype.addItem = function(Item) { // Add product to Order
+	this.products.push(Item);
+};
+
+Order.prototype.setTotal = function(total) {
+	this.ordertotal = total;
 }
 
 Order.prototype.placeOrder = function(callback) {
-var obj = {
-    	"products":JSON.stringify(this.products),
-		"customer":JSON.stringify(this.customer),
-		"ccinfo":JSON.stringify(this.ccinfo),
-		"ordertotal":JSON.stringify(this.ordertotal)
-	};
+	var obj = new Object();
 
-//var s = JSON.stringify(obj);
+	obj['products'] = JSON.stringify(this.products);
+	obj['customer'] = JSON.stringify(this.customer);
+	obj['ccinfo'] = JSON.stringify(this.ccinfo);
+	obj['ordertotal'] = this.ordertotal;
 
-var str_calculator = obj;
-//context.setVariable("request.content", obj);
-context.setVariable("myvar", obj);
-//context.setVariable("request.content", obj);
-	
+print(JSON.stringify(obj));
+
+context.setVariable("payLoad", obj);
+context.setVariable('request.content', JSON.stringify(obj));
+
 };
 
-
+var json_data = JSON.parse(context.getVariable("request.content"));
 var cust = new Customer();
 
-var prod = new Product();
-var recipient = new Recipent();
 var ccinfo = new Ccinfo();
 
-cust.address1 = "123 Big Street";
+var k = 0
+var context_loop = "";
+while(context_loop != "product-in-context"){
+    context_loop = json_data.result.contexts[k].name;
+    var all_price = json_data.result.contexts[k].parameters.Price_list;
+    var all_item = json_data.result.contexts[k].parameters.Item_list;
+    
+cust.address1 = json_data.result.contexts[k].parameters["address"] || json_data.result.contexts[4].parameters["geo-city"] + json_data.result.contexts[4].parameters["geo-country"] + json_data.result.contexts[4].parameters["State-US"] + json_data.result.contexts[4].parameters["zip-code"] ;
 cust.address2 = "";
-cust.city = "Wilmington";
-cust.country = "US";
-cust.email = "phil@floristone.com";
+cust.city = json_data.result.contexts[k].parameters["geo-city"];
+cust.country = json_data.result.contexts[k].parameters["geo-country"];
+cust.email = json_data.result.contexts[k].parameters["email"];
 cust.ip = "1.1.1.1";
-cust.name = "John Doe";
-cust.state = "DE";
-cust.zipcode = "19801";
-cust.phone = "123-123-1234";
+cust.name = json_data.result.contexts[k].parameters["given-name"] || json.result.contexts[3].parameters["given-name"] + json.result.contexts[3].parameters["last-name"];
+cust.state = json_data.result.contexts[k].parameters["State-US"];
+cust.zipcode = json_data.result.contexts[k].parameters["zip-code"];
+cust.phone = json_data.result.contexts[k].parameters["phone-number"];
+    
+    k++
+}
 
-prod.cardmessage = "This is a card message";
-prod.deliverydate = "2017-07-28";
-prod.specialinstructions = "Special delivery instructions go here";
-prod.code = "F1-509";
-prod.price = 39.95;
-prod.recipient = recipient;
 
-recipient.address1 = "123 Big St";
-recipient.address2 = "";
-recipient.name = "phil";
-recipient.city = "Wilmington";
-recipient.state = "DE";
-recipient.country = "US";
-recipient.institution = "House";
-recipient.zipcode = "19805";
-recipient.phone = '1234567890';
-
+ccinfo.type = 'vi';
 ccinfo.ccnum = 1234512345123455;
 ccinfo.cvv2 = 123;
 ccinfo.expmonth = 3;
 ccinfo.expyear = 19;
-ccinfo.type = 'vi';
-
-// var order = new Order({'customer':cust,'products':prod,'ccinfo':ccinfo});
-
-
-
 
 var order = new Order({
-	products : prod,
 	customer : cust,
 	ccinfo : ccinfo
 });
-// console.log(JSON.stringify(ccinfo))
+
+var total_price_of_all_prod = 0;
+for (var i = 0; i < all_item.length; i++) {
+	var product = new Product();
+	
+	product.cardmessage = "This is a card message";
+	product.deliverydate = "2017-08-28";
+	product.specialinstructions = "Special delivery instructions go here";
+	product.code = all_item[i];
+	product.price = all_price[i];
+    total_price_of_all_prod = total_price_of_all_prod + all_price[i];
+
+	product.recipient.name = "phil";
+	product.recipient.institution = "House";
+	product.recipient.address1 = "123 Big St";
+	product.recipient.address2 = "";
+	product.recipient.city = "Wilmington";
+	product.recipient.state = "DE";
+	product.recipient.country = "US";
+	product.recipient.phone = '1234567890';
+	product.recipient.zipcode = "19805";
+
+	order.addItem(product);
+}
+
+var ordertotal = parseFloat(FLORISTONESERVICECHARGE) + parseFloat(total_price_of_all_prod);
+
+order.setTotal(ordertotal);
 
 order.placeOrder(function(result) {
 //	console.log(result)
 });
+

@@ -1,19 +1,18 @@
 var express = require('express');
 var request = require('request');
-var bodyParser = require('body-parser');
 var apigee = require('apigee-access');
 
 var app = express();
-//app.use(bodyParser.json());
 
-app.post('/placeOrder', function(request, response) {
+app.post('/',
+                    function(request, response) {
 
 	callToBackend(request, response, function(err, data) {
 
 		if (!err){
 
 			response.setHeader('Content-Type', 'application/json');
-			
+
 			response.send(data);
 		}
 		else {
@@ -26,19 +25,14 @@ app.post('/placeOrder', function(request, response) {
 });
 
 var callToBackend = function(mainreq, mainres, callback) {
-	var jsonDataObj = apigee.getVariable(mainreq, 'myvar');
-	
-	console.log("convertostring"+JSON.stringify(jsonDataObj));
-
+    var receivedMessage = apigee.getVariable(mainreq,'request.content');
 	var options = {
+		url : "https://www.floristone.com/api/rest/flowershop/placeorder",
+		body : receivedMessage,
 
-		url : "http://kaprthikprabhu-prod.apigee.net/webhook-flower",
-		body : JSON.stringify(jsonDataObj),
-        
 		"headers" : {
 			"content-type" : "application/json;charset=utf-8",
 			"authorization" : "Basic NDE4ODQyOjB0RU5Fdw=="
-
 		}
 
 	};
@@ -57,15 +51,3 @@ console.log(body);
 app.listen((process.env.PORT || 9001), function() {
 	console.log("server Listening");
 });
-
-
-function getLengthInBytes(str) {
-    var s = str.length;
-    for (var i=str.length-1; i>=0; i--) {
-        var code = str.charCodeAt(i);
-        if (code > 0x7f && code <= 0x7ff) s++;
-        else if (code > 0x7ff && code <= 0xffff) s+=2;
-        if (code >= 0xDC00 && code <= 0xDFFF) i--; //trail surrogate
-    }
-    return s;
-}

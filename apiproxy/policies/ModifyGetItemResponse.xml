@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables async="false" continueOnError="false" enabled="true" name="ModifyGetItemResponse">
+    <DisplayName>ModifyGetItemResponse</DisplayName>
+    <Properties/>
+    <URIPath name="name"/>
+    <QueryParam name="name"/>
+    <Header name="name"/>
+    <FormParam name="name"/>
+    <Variable name="name"/>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <JSONPayload>
+        <Variable name="CODE">
+            <JSONPath>$.PRODUCTS[0].CODE</JSONPath>
+        </Variable>
+        <Variable name="SMALL">
+            <JSONPath>$.PRODUCTS[0].SMALL</JSONPath>
+        </Variable>
+        <Variable name="DESCRIPTION">
+            <JSONPath>$.PRODUCTS[0].DESCRIPTION</JSONPath>
+        </Variable>
+        <Variable name="NAME">
+            <JSONPath>$.PRODUCTS[0].NAME</JSONPath>
+        </Variable>
+        <Variable name="PRICE">
+            <JSONPath>$.PRODUCTS[0].PRICE</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">response</Source>
+    <VariablePrefix>apigee</VariablePrefix>
+</ExtractVariables>

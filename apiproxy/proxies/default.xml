@@ -4,6 +4,9 @@
     <FaultRules/>
     <PreFlow name="PreFlow">
         <Request>
+            <Step>
+                <Name>parseRequestBody</Name>
+            </Step>
         </Request>
         <Response/>
     </PreFlow>
@@ -12,24 +15,99 @@
         <Response/>
     </PostFlow>
     <Flows>
+        <Flow name="GetPrice">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GetBackendAuth</Name>
+                </Step>
+                <Step>
+                    <Name>GetProductInformation</Name>
+                </Step>
+                <Step>
+                    <Name>GetProductPrice</Name>
+                </Step>
+                <Step>
+                    <Name>getPayloadDatajs</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>ModifyResponseAgentContext</Name>
+                </Step>
+            </Response>
+            <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" )</Condition>
+        </Flow>
         <Flow name="PlaceOrder">
             <Description/>
             <Request>
                 <Step>
-                    <Name>GetPayloadData</Name>
+                    <Name>GetPayloadDatajs</Name>
                 </Step>
             </Request>
             <Response/>
-            <Condition>(proxy.pathsuffix MatchesPath "/placeOrder") and (request.verb = "POST")</Condition>
+            <Condition>(my.flow = "placeOrder")</Condition>
+        </Flow>
+        <Flow name="GetItem">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GetBackendAuth</Name>
+                </Step>
+                <Step>
+                    <Name>ModifyGetItemRequest</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>ModifyGetItemResponse</Name>
+                </Step>
+                <Step>
+                    <Name>ModifyGetItemResponseAPIAI</Name>
+                </Step>
+            </Response>
+            <Condition>(my.flow = "getproducts")</Condition>
+        </Flow>
+        <Flow name="CheckDeliveryDate">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GetBackendAuth</Name>
+                </Step>
+                <Step>
+                    <Name>ModifyCheckDeliveryDateRequest</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>ExtractAvailableDate</Name>
+                </Step>
+                <Step>
+                    <Name>CheckAvailableDeliveryDate</Name>
+                </Step>
+            </Response>
+            <Condition>(my.flow = "check.delivery")</Condition>
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>/webhook/v1</BasePath>
+        <BasePath>/floristwebhook/v1</BasePath>
         <Properties/>
         <VirtualHost>default</VirtualHost>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <RouteRule name="default">
         <TargetEndpoint>default</TargetEndpoint>
+        <Condition>(my.flow = "placeOrder") and (request.verb = "POST")</Condition>
+    </RouteRule>
+    <RouteRule name="GoNowhere">
+        <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" )</Condition>
+    </RouteRule>
+    <RouteRule name="GetItem">
+        <Condition>(my.flow = "getproducts") and (request.verb = "GET") </Condition>
+        <URL>https://www.floristone.com/api/rest/flowershop/getproducts</URL>
+    </RouteRule>
+    <RouteRule name="CheckDeliveryDate">
+        <Condition>(my.flow = "check.delivery") and (request.verb = "GET") </Condition>
+        <URL>https://www.floristone.com/api/rest/flowershop/checkdeliverydate</URL>
     </RouteRule>
 </ProxyEndpoint>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="1" name="FloristWebhook">
+    <Basepaths>/floristwebhook</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <CreatedAt>1503911435482</CreatedAt>
+    <CreatedBy>karthikprabhu77@gmail.com</CreatedBy>
+    <Description>A webhook to backend service Florist API</Description>
+    <DisplayName>FloristWebhook</DisplayName>
+    <LastModifiedAt>1504173630841</LastModifiedAt>
+    <LastModifiedBy>karthikprabhu77@gmail.com</LastModifiedBy>
+    <Policies>
+        <Policy>CheckAvailableDeliveryDate</Policy>
+        <Policy>ExtractAvailableDate</Policy>
+        <Policy>GetBackendAuth</Policy>
+        <Policy>GetJSONOrderDetails</Policy>
+        <Policy>GetPayloadDatajs</Policy>
+        <Policy>GetProductInformation</Policy>
+        <Policy>GetProductPrice</Policy>
+        <Policy>ModifyCheckDeliveryDateRequest</Policy>
+        <Policy>ModifyGetItemRequest</Policy>
+        <Policy>ModifyGetItemResponse</Policy>
+        <Policy>ModifyGetItemResponseAPIAI</Policy>
+        <Policy>ModifyReponsePlaceOrder</Policy>
+        <Policy>ModifyResponseAgentContext</Policy>
+        <Policy>getPayloadDatajs</Policy>
+        <Policy>parseRequestBody</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>node://app.js</Resource>
+        <Resource>jsc://CheckAvailableDates.js</Resource>
+        <Resource>jsc://createList.js</Resource>
+        <Resource>jsc://getPayloadData.js</Resource>
+        <Resource>jsc://parseRequestBody.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+    <validate>false</validate>
+</APIProxy>
