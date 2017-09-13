@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="getPayloadDatajs">
-    <DisplayName>CreateList</DisplayName>
+<Javascript async="false" continueOnError="false" enabled="true" timeLimit="200" name="GetPayloadDatajs">
+    <DisplayName>GetPayloadData</DisplayName>
     <Properties/>
-    <ResourceURL>jsc://createList.js</ResourceURL>
+    <ResourceURL>jsc://getPayloadData.js</ResourceURL>
 </Javascript>
