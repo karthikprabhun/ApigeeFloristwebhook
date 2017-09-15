@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<AssignMessage async="false" continueOnError="false" enabled="true" name="ModifyGetItemRequest">
-    <DisplayName>ModifyGetItemRequest</DisplayName>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="ModifyRequestGetMutipleItems">
+    <DisplayName>ModifyRequestGetMutipleItems</DisplayName>
     <Properties/>
     <Add>
         <Headers/>
         <QueryParams>
-            <QueryParam name="code">{product_code}</QueryParam>
+            <QueryParam name="category">{category}</QueryParam>
+            <QueryParam name="count">7</QueryParam>
+            <QueryParam name="start">1</QueryParam>
         </QueryParams>
         <FormParams/>
     </Add>
@@ -18,6 +20,11 @@
         <Verb>GET</Verb>
         <Path/>
     </Set>
+    <AssignVariable>
+        <Name>name</Name>
+        <Value/>
+        <Ref/>
+    </AssignVariable>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
     <AssignTo createNew="false" transport="http" type="request"/>
 </AssignMessage>

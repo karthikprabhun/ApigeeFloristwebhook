@@ -38,6 +38,10 @@ if (action == 'placeOrder' || action == '1st-Item' || action == '2nd-Item' || ac
     context.setVariable("product_code", json_data.result.parameters.Products);
 }else if(action == 'check.delivery'){
     context.setVariable("zipcode", json_data.result.parameters['zip-code']);
+}else if(action == 'getPrice'){
+     context.setVariable("product_code", json_data.result.parameters.Products);
+}else if(action == 'listItem'){
+     context.setVariable("category", json_data.result.parameters.category1 || json_data.result.parameters.category2);
 }
 
 if (action == 'placeOrder') {
@@ -51,5 +55,9 @@ if (action == 'placeOrder') {
 } else if (action == '3rd-Item') {
     context.setVariable("my.flow", action);
 }else if (action == 'check.delivery') {
+    context.setVariable("my.flow", action);
+}else if (action == 'getPrice') {
+    context.setVariable("my.flow", action);
+}else if (action == 'listItem') {
     context.setVariable("my.flow", action);
 }

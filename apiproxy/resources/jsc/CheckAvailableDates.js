@@ -4,6 +4,8 @@ var list_dates = available_dates.DATES;
  
  var end_date = list_dates[list_dates.length-1];
  
+var unix_ts = Math.round(+new Date()/1000);
+  context.setVariable('today_date', unix_ts);
 function search(obj,arr){
   
   for(i =0;i<list_dates.length-1;i++) {

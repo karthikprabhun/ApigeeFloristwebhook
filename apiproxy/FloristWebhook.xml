@@ -6,11 +6,12 @@
     <CreatedBy>karthikprabhu77@gmail.com</CreatedBy>
     <Description>A webhook to backend service Florist API</Description>
     <DisplayName>FloristWebhook</DisplayName>
-    <LastModifiedAt>1504173630841</LastModifiedAt>
+    <LastModifiedAt>1505476355012</LastModifiedAt>
     <LastModifiedBy>karthikprabhu77@gmail.com</LastModifiedBy>
     <Policies>
         <Policy>CheckAvailableDeliveryDate</Policy>
         <Policy>ExtractAvailableDate</Policy>
+        <Policy>GenerateGetMutipleItemsResponse</Policy>
         <Policy>GetBackendAuth</Policy>
         <Policy>GetJSONOrderDetails</Policy>
         <Policy>GetPayloadDatajs</Policy>
@@ -20,8 +21,11 @@
         <Policy>ModifyGetItemRequest</Policy>
         <Policy>ModifyGetItemResponse</Policy>
         <Policy>ModifyGetItemResponseAPIAI</Policy>
+        <Policy>ModifyGetMutipleItemsResponse</Policy>
         <Policy>ModifyReponsePlaceOrder</Policy>
+        <Policy>ModifyRequestGetMutipleItems</Policy>
         <Policy>ModifyResponseAgentContext</Policy>
+        <Policy>ModifyResponseForPrice</Policy>
         <Policy>getPayloadDatajs</Policy>
         <Policy>parseRequestBody</Policy>
     </Policies>
@@ -31,6 +35,7 @@
     <Resources>
         <Resource>node://app.js</Resource>
         <Resource>jsc://CheckAvailableDates.js</Resource>
+        <Resource>jsc://GenerateGetMutipleItemsResponse.js</Resource>
         <Resource>jsc://createList.js</Resource>
         <Resource>jsc://getPayloadData.js</Resource>
         <Resource>jsc://parseRequestBody.js</Resource>
