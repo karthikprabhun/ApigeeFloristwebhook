@@ -33,10 +33,15 @@
             </Request>
             <Response>
                 <Step>
+                    <Condition>(my.flow = "getPrice")</Condition>
+                    <Name>ModifyResponseForPrice</Name>
+                </Step>
+                <Step>
+                    <Condition>(my.flow != "getPrice")</Condition>
                     <Name>ModifyResponseAgentContext</Name>
                 </Step>
             </Response>
-            <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" )</Condition>
+            <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" ) OR (my.flow = "getPrice")</Condition>
         </Flow>
         <Flow name="PlaceOrder">
             <Description/>
@@ -88,6 +93,26 @@
             </Response>
             <Condition>(my.flow = "check.delivery")</Condition>
         </Flow>
+        <Flow name="GetMutipleItems">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>GetBackendAuth</Name>
+                </Step>
+                <Step>
+                    <Name>ModifyRequestGetMutipleItems</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>GenerateGetMutipleItemsResponse</Name>
+                </Step>
+                <Step>
+                    <Name>ModifyGetMutipleItemsResponse</Name>
+                </Step>
+            </Response>
+            <Condition>my.flow = "listItem"</Condition>
+        </Flow>
     </Flows>
     <HTTPProxyConnection>
         <BasePath>/floristwebhook/v1</BasePath>
@@ -100,7 +125,7 @@
         <Condition>(my.flow = "placeOrder") and (request.verb = "POST")</Condition>
     </RouteRule>
     <RouteRule name="GoNowhere">
-        <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" )</Condition>
+        <Condition>(my.flow = "1st-Item") OR (my.flow = "2nd-Item") OR (my.flow = "3rd-Item" ) OR (my.flow = "getPrice" )</Condition>
     </RouteRule>
     <RouteRule name="GetItem">
         <Condition>(my.flow = "getproducts") and (request.verb = "GET") </Condition>
@@ -109,5 +134,9 @@
     <RouteRule name="CheckDeliveryDate">
         <Condition>(my.flow = "check.delivery") and (request.verb = "GET") </Condition>
         <URL>https://www.floristone.com/api/rest/flowershop/checkdeliverydate</URL>
+    </RouteRule>
+    <RouteRule name="ListItem">
+        <Condition>(my.flow = "listItem") and (request.verb = "GET") </Condition>
+        <URL>https://www.floristone.com/api/rest/flowershop/getproducts</URL>
     </RouteRule>
 </ProxyEndpoint>

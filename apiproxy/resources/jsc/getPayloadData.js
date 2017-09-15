@@ -150,26 +150,27 @@ var cust = new Customer();
 
 var ccinfo = new Ccinfo();
 
-var k = 0
-var context_loop = "";
-while(context_loop != "product-in-context"){
-    context_loop = json_data.result.contexts[k].name;
-    var all_price = json_data.result.contexts[k].parameters.Price_list;
-    var all_item = json_data.result.contexts[k].parameters.Item_list;
+ var k = 0
+
+while(json_data.result.contexts[k].name != "product-in-context"){
+    k++;
     
-cust.address1 = json_data.result.contexts[k].parameters["address"] || json_data.result.contexts[4].parameters["geo-city"] + json_data.result.contexts[4].parameters["geo-country"] + json_data.result.contexts[4].parameters["State-US"] + json_data.result.contexts[4].parameters["zip-code"] ;
+}
+print (k)
+var all_price = json_data.result.contexts[k].parameters.Price_list;
+var all_item = json_data.result.contexts[k].parameters.Item_list;
+var deilveryDate = json_data.result.contexts[k].parameters.date;
+cust.address1 = json_data.result.contexts[k].parameters["address"] || json_data.result.contexts[k].parameters["geo-city"] + json_data.result.contexts[k].parameters["geo-country"] + json_data.result.contexts[k].parameters["State-US"] + json_data.result.contexts[k].parameters["zip-code"] ;
 cust.address2 = "";
 cust.city = json_data.result.contexts[k].parameters["geo-city"];
 cust.country = json_data.result.contexts[k].parameters["geo-country"];
 cust.email = json_data.result.contexts[k].parameters["email"];
 cust.ip = "1.1.1.1";
-cust.name = json_data.result.contexts[k].parameters["given-name"] || json.result.contexts[3].parameters["given-name"] + json.result.contexts[3].parameters["last-name"];
+cust.name = json_data.result.contexts[k].parameters["given-name"] || json_data.result.contexts[k].parameters["given-name"] + json_data.result.contexts[k].parameters["last-name"];
 cust.state = json_data.result.contexts[k].parameters["State-US"];
 cust.zipcode = json_data.result.contexts[k].parameters["zip-code"];
 cust.phone = json_data.result.contexts[k].parameters["phone-number"];
-    
-    k++
-}
+
 
 
 ccinfo.type = 'vi';
@@ -188,7 +189,7 @@ for (var i = 0; i < all_item.length; i++) {
 	var product = new Product();
 	
 	product.cardmessage = "This is a card message";
-	product.deliverydate = "2017-08-28";
+	product.deliverydate = deilveryDate;
 	product.specialinstructions = "Special delivery instructions go here";
 	product.code = all_item[i];
 	product.price = all_price[i];
